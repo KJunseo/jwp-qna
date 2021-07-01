@@ -18,7 +18,7 @@ class UserRepositoryTest {
 
     @Nested
     @DisplayName("user 아이디를 통한 유저 조회")
-    class findByUserId {
+    class FindByUserId {
 
         @Test
         @DisplayName("존재하는 유저 조회하기")
