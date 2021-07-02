@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class QuestionRepositoryTest {
@@ -28,7 +27,9 @@ class QuestionRepositoryTest {
         List<Question> results = questions.findByDeletedFalse();
 
         // then
-        assertThat(results).contains(QuestionTest.Q1, QuestionTest.Q2);
+        assertThat(results).usingElementComparatorOnFields("id").isNotNull();
+        assertThat(results).usingElementComparatorIgnoringFields("id")
+                .contains(QuestionTest.Q1, QuestionTest.Q2);
     }
 
     @Nested
