@@ -1,7 +1,5 @@
 package qna.question;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import qna.answer.Answer;
 import qna.common.BaseEntity;
@@ -9,7 +7,6 @@ import qna.common.exception.CannotDeleteException;
 import qna.user.User;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class Question extends BaseEntity {
     private User writer;
 
     @OneToMany(mappedBy = "question")
-    private List<Answer> answers = new ArrayList<>();
+    private final List<Answer> answers = new ArrayList<>();
 
     protected Question() {
     }
