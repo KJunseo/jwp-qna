@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 public class Question {
@@ -64,12 +63,6 @@ public class Question {
         answer.toQuestion(this);
     }
 
-    public List<Answer> getNotDeletedAnswers() {
-        return answers.stream()
-                .filter(answer -> !answer.isDeleted())
-                .collect(Collectors.toList());
-    }
-
     public void delete(User loginUser) {
         checkAuthority(loginUser);
         this.deleted = true;
@@ -95,6 +88,10 @@ public class Question {
 
     private void deleteIncludedAnswer() {
         answers.forEach(Answer::delete);
+    }
+
+    public List<Answer> getAnswers() {
+        return new ArrayList<>(answers);
     }
 
     public Long getId() {

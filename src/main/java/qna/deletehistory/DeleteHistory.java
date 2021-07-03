@@ -1,10 +1,14 @@
 package qna.deletehistory;
 
+import qna.answer.Answer;
 import qna.common.ContentType;
+import qna.question.Question;
 import qna.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +36,25 @@ public class DeleteHistory {
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    public static List<DeleteHistory> createDeleteHistories(Question question) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        addQuestionDeleteHistory(question, deleteHistories);
+        addAnswerDeleteHistories(question.getAnswers(), deleteHistories);
+        return deleteHistories;
+    }
+
+    private static void addQuestionDeleteHistory(Question question, List<DeleteHistory> deleteHistories) {
+        deleteHistories.add(
+                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+    }
+
+    private static void addAnswerDeleteHistories(List<Answer> deletedAnswers, List<DeleteHistory> deleteHistories) {
+        deletedAnswers.forEach(answer ->
+                deleteHistories.add(
+                        new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+        );
     }
 
     @Override
