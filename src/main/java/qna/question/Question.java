@@ -1,5 +1,8 @@
 package qna.question;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import qna.answer.Answer;
 import qna.common.exception.CannotDeleteException;
 import qna.user.User;
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Question {
     @Id
@@ -18,8 +22,9 @@ public class Question {
     @Lob
     private String contents;
 
+    @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private boolean deleted = false;
@@ -27,6 +32,7 @@ public class Question {
     @Column(nullable = false, length = 100)
     private String title;
 
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @ManyToOne

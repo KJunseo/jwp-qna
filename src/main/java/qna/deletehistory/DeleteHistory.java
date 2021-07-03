@@ -1,5 +1,7 @@
 package qna.deletehistory;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import qna.answer.Answer;
 import qna.common.ContentType;
 import qna.question.Question;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class DeleteHistory {
     @Id
@@ -22,7 +25,8 @@ public class DeleteHistory {
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
-    private LocalDateTime createDate = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createDate;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_delete_history_to_user"))

@@ -1,5 +1,8 @@
 package qna.answer;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import qna.common.exception.NotFoundException;
 import qna.common.exception.UnAuthorizedException;
 import qna.question.Question;
@@ -9,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Answer {
     @Id
@@ -18,8 +22,9 @@ public class Answer {
     @Lob
     private String contents;
 
+    @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private boolean deleted = false;
@@ -28,6 +33,7 @@ public class Answer {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @ManyToOne
