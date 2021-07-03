@@ -2,6 +2,7 @@ package qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,9 @@ public class Question {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+
     protected Question() {
     }
 
@@ -52,7 +56,14 @@ public class Question {
     }
 
     public void addAnswer(Answer answer) {
+        this.answers.add(answer);
         answer.toQuestion(this);
+    }
+
+    public List<Answer> getNotDeletedAnswers() {
+        return answers.stream()
+                .filter(answer -> !answer.isDeleted())
+                .collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -105,6 +116,7 @@ public class Question {
                 ", title='" + title + '\'' +
                 ", updatedAt=" + updatedAt +
                 ", writer=" + writer +
+                ", answers=" + answers +
                 '}';
     }
 }
