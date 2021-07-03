@@ -29,8 +29,8 @@ class AnswerRepositoryTest {
         void exist() {
             // given
             Question question = questions.save(QuestionTest.Q1);
-            AnswerTest.A1.setQuestionId(question.getId());
-            AnswerTest.A2.setQuestionId(question.getId());
+            AnswerTest.A1.setQuestion(question);
+            AnswerTest.A2.setQuestion(question);
 
             // when
             answers.save(AnswerTest.A1);
@@ -47,7 +47,7 @@ class AnswerRepositoryTest {
         @DisplayName("존재하지 않는 경우")
         void nonExist() {
             // given
-            Long questionId = AnswerTest.A1.getQuestionId();
+            Long questionId = AnswerTest.A1.getQuestion().getId();
 
             // when
             List<Answer> results = answers.findByQuestionIdAndDeletedFalse(questionId);
@@ -77,7 +77,7 @@ class AnswerRepositoryTest {
         @DisplayName("존재하지 않는 경우")
         void nonExist() {
             // given
-            Long questionId = AnswerTest.A1.getQuestionId();
+            Long questionId = AnswerTest.A1.getQuestion().getId();
 
             // when
             Optional<Answer> result = answers.findByIdAndDeletedFalse(questionId);

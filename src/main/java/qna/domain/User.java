@@ -127,10 +127,12 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
+                ", createdAt=" + createdAt +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", updatedAt=" + updatedAt +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 
