@@ -61,6 +61,10 @@ public class Answer {
         return this.writer.equals(writer);
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
     }
