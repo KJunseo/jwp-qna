@@ -1,6 +1,7 @@
 package qna.question;
 
 import qna.answer.Answer;
+import qna.common.exception.CannotDeleteException;
 import qna.user.User;
 
 import javax.persistence.*;
@@ -67,6 +68,28 @@ public class Question {
         return answers.stream()
                 .filter(answer -> !answer.isDeleted())
                 .collect(Collectors.toList());
+    }
+
+    public void delete(User loginUser) {
+        checkAuthority(loginUser);
+        this.deleted = true;
+    }
+
+    private void checkAuthority(User loginUser) {
+        validatesQuestionOwner(loginUser);
+        answers.forEach(answer -> validatesAnswerOwner(loginUser, answer));
+    }
+
+    private void validatesQuestionOwner(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void validatesAnswerOwner(User loginUser, Answer answer) {
+        if (!answer.isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     public Long getId() {
