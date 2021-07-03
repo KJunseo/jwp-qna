@@ -3,15 +3,11 @@ package qna.answer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.question.Question;
-import qna.question.QuestionTest;
 import qna.user.User;
-import qna.user.UserTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+class AnswerTest {
 
     @Test
     @DisplayName("질문이 삭제되면 포함되어 있던 답변도 삭제된다.")

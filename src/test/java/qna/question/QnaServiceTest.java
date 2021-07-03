@@ -64,7 +64,7 @@ class QnaServiceTest {
     @DisplayName("question id를 통해 이미 deleted 된 질문 찾기")
     void findQuestionByIdAlreadyDeleted() {
         // given
-        question = new Question(1L,true,"title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question = new Question(1L, true, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         given(questionRepository.findById(question.getId()))
                 .willReturn(Optional.of(question));
 
