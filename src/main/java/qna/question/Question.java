@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import qna.answer.Answer;
+import qna.common.BaseEntity;
 import qna.common.exception.CannotDeleteException;
 import qna.user.User;
 
@@ -14,26 +15,15 @@ import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Question {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Question extends BaseEntity {
     @Lob
     private String contents;
-
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private boolean deleted = false;
 
     @Column(nullable = false, length = 100)
     private String title;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -50,7 +40,12 @@ public class Question {
     }
 
     public Question(Long id, String title, String contents) {
-        this.id = id;
+        this(id, false, title, contents);
+    }
+
+    public Question(Long id, boolean deleted, String title, String contents) {
+        super(id);
+        this.deleted = deleted;
         this.title = title;
         this.contents = contents;
     }
@@ -100,55 +95,23 @@ public class Question {
         return new ArrayList<>(answers);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
     public User getWriter() {
         return writer;
-    }
-
-    public void setWriter(User writer) {
-        this.writer = writer;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", contents='" + contents + '\'' +
-                ", createdAt=" + createdAt +
+                ", createdAt=" + super.getCreatedAt() +
                 ", deleted=" + deleted +
                 ", title='" + title + '\'' +
-                ", updatedAt=" + updatedAt +
+                ", updatedAt=" + super.getUpdatedAt() +
                 ", writer=" + writer +
                 ", answers=" + answers +
                 '}';

@@ -1,30 +1,18 @@
 package qna.answer;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import qna.common.BaseEntity;
 import qna.common.exception.NotFoundException;
 import qna.common.exception.UnAuthorizedException;
 import qna.question.Question;
 import qna.user.User;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Answer extends BaseEntity {
     @Lob
     private String contents;
-
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private boolean deleted = false;
@@ -32,9 +20,6 @@ public class Answer {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -48,7 +33,7 @@ public class Answer {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
-        this.id = id;
+        super(id);
 
         if (Objects.isNull(writer)) {
             throw new UnAuthorizedException();
@@ -75,55 +60,23 @@ public class Answer {
         this.question = question;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public User getWriter() {
         return writer;
-    }
-
-    public void setWriter(User writer) {
-        this.writer = writer;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
         return "Answer{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", contents='" + contents + '\'' +
-                ", createdAt=" + createdAt +
+                ", createdAt=" + super.getCreatedAt() +
                 ", deleted=" + deleted +
                 ", question=" + question +
-                ", updatedAt=" + updatedAt +
+                ", updatedAt=" + super.getUpdatedAt() +
                 ", writer=" + writer +
                 '}';
     }
