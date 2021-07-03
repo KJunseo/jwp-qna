@@ -1,4 +1,7 @@
-package qna.domain;
+package qna.question;
+
+import qna.answer.Answer;
+import qna.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

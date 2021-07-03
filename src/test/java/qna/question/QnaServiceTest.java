@@ -1,4 +1,4 @@
-package qna.service;
+package qna.question;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,9 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import qna.CannotDeleteException;
-import qna.NotFoundException;
-import qna.domain.*;
+import qna.answer.Answer;
+import qna.common.ContentType;
+import qna.common.exception.CannotDeleteException;
+import qna.common.exception.NotFoundException;
+import qna.deletehistory.DeleteHistory;
+import qna.deletehistory.DeleteHistoryService;
+import qna.user.UserTest;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

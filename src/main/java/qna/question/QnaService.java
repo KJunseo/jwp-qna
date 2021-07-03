@@ -1,12 +1,16 @@
-package qna.service;
+package qna.question;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qna.CannotDeleteException;
-import qna.NotFoundException;
-import qna.domain.*;
+import qna.answer.Answer;
+import qna.common.ContentType;
+import qna.common.exception.CannotDeleteException;
+import qna.common.exception.NotFoundException;
+import qna.deletehistory.DeleteHistory;
+import qna.deletehistory.DeleteHistoryService;
+import qna.user.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package qna.domain;
+package qna.user;
 
-import qna.UnAuthorizedException;
+import qna.common.exception.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

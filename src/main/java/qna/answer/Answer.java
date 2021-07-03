@@ -1,7 +1,9 @@
-package qna.domain;
+package qna.answer;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.common.exception.NotFoundException;
+import qna.common.exception.UnAuthorizedException;
+import qna.question.Question;
+import qna.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
